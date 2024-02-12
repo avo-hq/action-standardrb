@@ -7,9 +7,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v1
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
       - name: hadolint
         uses: reviewdog/action-hadolint@v1
         with:
