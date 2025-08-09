@@ -14,13 +14,10 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 # Ensure StandardRB is installed
 gem install -N standard $(version $INPUT_RUBOCOP_VERSION)
 
-cp /config/.rubocop.yml .rubocop.yml
-echo "%s\n" "extend_config:" "  - .rubocop.yml" > .standard.yml
-
 echo '::group:: Running standardrb with reviewdog 🐶 ...'
 standardrb ${INPUT_RUBOCOP_FLAGS} \
   | reviewdog \
-  -f=standardrb \
+  -f=rubocop \
   -name="${INPUT_TOOL_NAME}" \
   -reporter="${INPUT_REPORTER}" \
   -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
