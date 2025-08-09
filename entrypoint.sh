@@ -14,14 +14,8 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 # Ensure StandardRB is installed
 gem install -N standard $(version $INPUT_RUBOCOP_VERSION)
 
-# If no project-level Standard config exists, create one that extends rules.
-if [ ! -f ".standard.yml" ]; then
-  # If the workspace lacks a rubocop rules file, seed it from image defaults
-  if [ ! -f ".rubocop.yml" ] && [ -f "/config/.rubocop.yml" ]; then
-    cp /config/.rubocop.yml .rubocop.yml
-  fi
-  printf "%s\n" "extend_config:" "  - .rubocop.yml" > .standard.yml
-fi
+cp /config/.rubocop.yml .rubocop.yml
+echo "%s\n" "extend_config:" "  - .rubocop.yml" > .standard.yml
 
 echo '::group:: Running standardrb with reviewdog 🐶 ...'
 standardrb ${INPUT_RUBOCOP_FLAGS} \
